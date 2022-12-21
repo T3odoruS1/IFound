@@ -51,6 +51,7 @@ struct DrawerView: View {
 						Spacer()
 					}
 					DrawerElement(buttonText: "Waypoint", distance: 48488.432)
+					Spacer().frame(height: 55)
 				}
 				
 

@@ -55,7 +55,9 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 				distance += lastSeenLocation!.distance(from: curLocation)
 				polyLineCoordinates.append(curLocation.coordinate)
 			} // If
+			
 			lastSeenLocation = curLocation
+			
 		} // For
 		if let mapCenter = lastSeenLocation?.coordinate {
 			region.center = mapCenter

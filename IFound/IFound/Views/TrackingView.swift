@@ -29,22 +29,37 @@ struct TrackingView: View {
 					polyLineCoordinates: locationManager.polyLineCoordinates)
 				
 				
+				
 				if(horizontalSizeClass == .compact && verticalSizeClass == .regular){
 					VStack(spacing: 4){
-					
-						DrawerView(heights: .constant([CGFloat(60), CGFloat(200), CGFloat(660)])).environmentObject(locationManager)
+						DrawerView(heights: .constant([CGFloat(60), CGFloat(200), CGFloat(660)]))
+							.environmentObject(locationManager)
 					
 				} // VStack
 				}else if(verticalSizeClass == .compact){
 					HStack(spacing: 4){
-						DrawerView(heights: .constant([CGFloat(60), CGFloat(200), CGFloat(330)])).padding(.leading).environmentObject(locationManager)
+						
+
+						Spacer().frame(width: 30, height: 30)
+						DrawerView(heights: .constant([CGFloat(60), CGFloat(200), CGFloat(330)]))
+							.environmentObject(locationManager)
+							.padding(.leading)
+						
 						Spacer()
-					
-				} // VStack
+
+
+
+					}.padding(.leading) // VStack
 				}else if(verticalSizeClass == .regular && horizontalSizeClass == .regular){
 					HStack(spacing: 4){
-						DrawerView(heights: .constant([CGFloat(60), CGFloat(200), CGFloat(660)])).padding(.leading).environmentObject(locationManager)
+						
+						DrawerView(heights: .constant([CGFloat(60), CGFloat(200), CGFloat(660)]))
+							.padding(.leading)
+							.environmentObject(locationManager)
+						
 						Spacer()
+
+
 					}
 					
 				}
