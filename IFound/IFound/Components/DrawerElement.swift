@@ -9,18 +9,25 @@ import SwiftUI
 
 struct DrawerElement: View {
 	
-	var buttonText: String
-	var distance: Double
+	var heading1: String
+	var heading2: String
+	var heading3: String
+	
+	var value1: Double
+	// This is time or distance
+	var value2: Any
+	var value3: Double
+
 	
     var body: some View {
 		
 		VStack(spacing: 5){
 			
-			PairView(leftText: "Distance traveled:", rightText: "\(distance.rounded()) m")
+			PairView(leftText: heading1, rightText: "\(value1.rounded()) m")
 				.padding([.leading, .trailing, .top])
-				PairView(leftText: "Time spent:", rightText: "10 min")
+				PairView(leftText: heading2, rightText: getHeadingContent(value: value2))
 				.padding([.leading, .trailing])
-				PairView(leftText: "Average speed:", rightText: "5 km/h")
+				PairView(leftText: heading3, rightText: "\(value1.rounded()) km/h")
 				.padding([.leading, .trailing, .bottom])
 			
 			
@@ -31,11 +38,27 @@ struct DrawerElement: View {
 		.padding([.leading, .trailing])
 		
     }
+	
+	
+	func getHeadingContent(value: Any) -> String{
+		if(type(of: value) == Double.self){
+			let typedVal = value as! Double
+			return String(typedVal.rounded()) + " m"
+		}else if(type(of: value) == DateInterval.self){
+			let typedVal = value as! DateInterval
+			let components = Calendar.current.dateComponents([.hour, .minute, .second], from: typedVal.start, to: typedVal.end)
+			return "\(components.hour ?? 0):\(components.minute ?? 0):\(components.second ?? 0)"
+		}
+		return "Data not converted \(type(of: value))"
+	}
 }
 
 struct DrawerElement_Previews: PreviewProvider {
     static var previews: some View {
-		DrawerElement(buttonText: "Start/Stop", distance: 104.1324)
+		DrawerElement(heading1: "Distance traveled:",
+					  heading2: "Time spent:",
+					  heading3: "Average speed:",
+					  value1: 1000.00, value2: 123.2, value3: 5.0)
     }
 }
 

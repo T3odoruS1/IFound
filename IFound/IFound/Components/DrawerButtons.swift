@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct DrawerButtons: View {
+	@EnvironmentObject var locationManager: AppLocationManager
+
+
+	
     var body: some View {
 		ScrollView(.horizontal, showsIndicators: false){
 			HStack{
@@ -16,7 +20,7 @@ struct DrawerButtons: View {
 						.padding(.top)
 						.foregroundColor(.secondary)
 					Button(action: {
-						// Action
+						locationManager.toggleLocationUpdates()
 					}, label: {
 						Text("")
 						Label("", systemImage: "playpause").font(.largeTitle).frame(width: 55, height: 55)

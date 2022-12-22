@@ -10,14 +10,14 @@ import CoreLocation
 
 struct ActivityView: View {
 	
-	@StateObject var locationManager = AppLocationManager()
+	@StateObject var locationManager: AppLocationManager = AppLocationManager()
 	
     var body: some View {
 		switch locationManager.authorizationStatus {
 		case .notDetermined:
 			Text("Location permission not determined")
 				.onAppear {
-				locationManager.requestPermissions()
+					locationManager.requestPermissions()
 			}
 		case .restricted:
 			Text("Location services restricted")

@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct IFoundApp: App {
+
+	
     var body: some Scene {
         WindowGroup {
-            HomeView()
+			HomeView()
         }
     }
 }

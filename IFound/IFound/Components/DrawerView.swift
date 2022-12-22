@@ -11,6 +11,7 @@ import Drawer
 
 struct DrawerView: View {
 	@EnvironmentObject var locationManager: AppLocationManager
+
 	@Binding var heights : [CGFloat]
 
 	
@@ -26,7 +27,7 @@ struct DrawerView: View {
 					.padding()
 				ScrollView{
 					
-					DrawerButtons()
+					DrawerButtons().environmentObject(locationManager)
 					
 					HStack{
 						Text("Total stats")
@@ -34,7 +35,12 @@ struct DrawerView: View {
 							.foregroundColor(.secondary)
 						Spacer()
 					}
-					DrawerElement(buttonText: "Start/Stop", distance: locationManager.distance)
+					DrawerElement(heading1: "Distance traveled: ",
+								  heading2: "Time spent: ",
+								  heading3: "Average speed: ",
+								  value1: locationManager.overallDistance,
+								  value2: locationManager.overallTime,
+								  value3: locationManager.overallAvgSpeed)
 					
 					HStack{
 						Text("From the last checkpoint")
@@ -42,15 +48,25 @@ struct DrawerView: View {
 							.foregroundColor(.secondary)
 						Spacer()
 					}
-					DrawerElement(buttonText: "Checkpoint", distance: 1234.4243)
+					DrawerElement(heading1: "Distance traveled: ",
+								  heading2: "Straight line distance: ",
+								  heading3: "Average speed: ",
+								  value1: locationManager.fromCheckpointDistanceTraveled,
+								  value2: locationManager.fromCheckpointDistanceStraight,
+								  value3: locationManager.fromCheckpointAvgSpeed)
 
 					HStack{
-						Text("From the last waypoint")
+						Text("To next waypoint")
 							.padding([.leading, .top])
 							.foregroundColor(.secondary)
 						Spacer()
 					}
-					DrawerElement(buttonText: "Waypoint", distance: 48488.432)
+					DrawerElement(heading1: "Distance traveled: ",
+								  heading2: "Straight line distance: ",
+								  heading3: "Average speed: ",
+								  value1: locationManager.fromWaypointDistanceTraveled,
+								  value2: locationManager.toWayPointDistance,
+								  value3: locationManager.sinceWaypointSetAvgSpeed)
 					Spacer().frame(height: 55)
 				}
 				

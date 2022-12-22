@@ -20,6 +20,7 @@
 		7C78831529523FBF005481BC /* CompasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78831429523FBF005481BC /* CompasView.swift */; };
 		7C78831729525050005481BC /* AppLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78831629525050005481BC /* AppLocationManager.swift */; };
 		7C7E737D295380A60036CBAD /* RoundIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E737C295380A60036CBAD /* RoundIconButton.swift */; };
+		7C7E73852953975E0036CBAD /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E73842953975E0036CBAD /* OptionsView.swift */; };
 		7C9BEF2A29533AAE00BA84CB /* Drawer in Frameworks */ = {isa = PBXBuildFile; productRef = 7C9BEF2929533AAE00BA84CB /* Drawer */; };
 		7C9BEF2C2953418800BA84CB /* DrawerElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BEF2B2953418800BA84CB /* DrawerElement.swift */; };
 		7C9BEF2E295350F700BA84CB /* DrawerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BEF2D295350F700BA84CB /* DrawerButtons.swift */; };
@@ -41,6 +42,7 @@
 		7C78831429523FBF005481BC /* CompasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompasView.swift; sourceTree = "<group>"; };
 		7C78831629525050005481BC /* AppLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocationManager.swift; sourceTree = "<group>"; };
 		7C7E737C295380A60036CBAD /* RoundIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundIconButton.swift; sourceTree = "<group>"; };
+		7C7E73842953975E0036CBAD /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		7C9BEF242953253D00BA84CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7C9BEF2B2953418800BA84CB /* DrawerElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerElement.swift; sourceTree = "<group>"; };
 		7C9BEF2D295350F700BA84CB /* DrawerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerButtons.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				7C78831229523FB0005481BC /* HistoryView.swift */,
 				7C78831429523FBF005481BC /* CompasView.swift */,
 				7C47FE0329525A2A00AC1F91 /* TrackingView.swift */,
+				7C7E73842953975E0036CBAD /* OptionsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				7C7882FE29523842005481BC /* ContentView.swift in Sources */,
 				7C9BEF2C2953418800BA84CB /* DrawerElement.swift in Sources */,
 				7C78831329523FB0005481BC /* HistoryView.swift in Sources */,
+				7C7E73852953975E0036CBAD /* OptionsView.swift in Sources */,
 				7C78830F29523F95005481BC /* ActivityView.swift in Sources */,
 				7C47FE0829525F3000AC1F91 /* MapView.swift in Sources */,
 				7C9BEF302953562000BA84CB /* DrawerView.swift in Sources */,

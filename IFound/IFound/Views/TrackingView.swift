@@ -14,13 +14,14 @@ struct TrackingView: View {
 	@Environment(\.horizontalSizeClass) var horizontalSizeClass
 	@Environment(\.verticalSizeClass) var verticalSizeClass
 	@EnvironmentObject var locationManager: AppLocationManager
+
 	@State var radius = 10
 	@State var heights = [CGFloat(50), CGFloat(200), CGFloat(660)]
 	
 	@State private var region = MKCoordinateRegion(
 		center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275),
 		span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-
+	
 	var body: some View {
 		VStack{
 			ZStack{
