@@ -9,8 +9,8 @@ import SwiftUI
 import CoreLocation
 
 struct ActivityView: View {
-	
-	@StateObject var locationManager: AppLocationManager = AppLocationManager()
+	@Environment (\.managedObjectContext) var managedObjContext
+	@EnvironmentObject var locationManager: AppLocationManager
 	
     var body: some View {
 		switch locationManager.authorizationStatus {
@@ -27,6 +27,7 @@ struct ActivityView: View {
 			
 			TrackingView()
 				.environmentObject(locationManager)
+				.environment(\.managedObjectContext, managedObjContext)
 			// Display tracking view
 			
 		default:

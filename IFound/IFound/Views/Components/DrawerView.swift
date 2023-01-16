@@ -11,6 +11,8 @@ import Drawer
 
 struct DrawerView: View {
 	@EnvironmentObject var locationManager: AppLocationManager
+	@Environment(\.managedObjectContext) var managedObjContext
+			
 
 	@Binding var heights : [CGFloat]
 
@@ -27,7 +29,7 @@ struct DrawerView: View {
 					.padding()
 				ScrollView{
 					
-					DrawerButtons().environmentObject(locationManager)
+					DrawerButtons().environmentObject(locationManager).environment(\.managedObjectContext, managedObjContext)
 					
 					HStack{
 						Text("Total stats")
@@ -37,7 +39,7 @@ struct DrawerView: View {
 					}
 					DrawerElement(heading1: "Distance traveled: ",
 								  heading2: "Time spent: ",
-								  heading3: "Average speed: ",
+								  heading3: "Average speed(min/km): ",
 								  value1: locationManager.overallDistance,
 								  value2: locationManager.overallTime,
 								  value3: locationManager.overallAvgSpeed)

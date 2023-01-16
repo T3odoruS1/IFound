@@ -14,6 +14,8 @@ struct TrackingView: View {
 	@Environment(\.horizontalSizeClass) var horizontalSizeClass
 	@Environment(\.verticalSizeClass) var verticalSizeClass
 	@EnvironmentObject var locationManager: AppLocationManager
+	@Environment (\.managedObjectContext) var managedObjContext
+
 
 	@State var radius = 10
 	@State var heights = [CGFloat(50), CGFloat(200), CGFloat(660)]
@@ -21,13 +23,28 @@ struct TrackingView: View {
 	@State private var region = MKCoordinateRegion(
 		center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275),
 		span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+//	@FetchRequest(sortDescriptors: [SortDescriptor(\.typeId, order: .reverse)])
+//				var types: FetchedResults<GpsLocationType>
 	
 	var body: some View {
+		
 		VStack{
+
 			ZStack{
 				MapView(
 					region: locationManager.region,
-					polyLineCoordinates: locationManager.polyLineCoordinates)
+					direction: locationManager.currentDirecion,
+					directionPreference: locationManager.directionPreference,
+					polylineCoordinates: locationManager.polyLineCoordinates,
+					speeds: locationManager.speeds,
+					checkpointCoordinates: locationManager.checkpointCoordinates,
+					mapType: locationManager.mapType
+					
+				)
+				.alert(isPresented: .constant(true)){
+					Alert(title: Text("For move accurate results start tracking only when you are about to start moving."), dismissButton:
+							.default(Text("Got it!")))
+			 }
 				
 				
 				
@@ -69,11 +86,19 @@ struct TrackingView: View {
 			} // ZStack
 			.ignoresSafeArea()
 			
+			
 						
 			
 				
 			
 		}// VStack
+		.onDisappear{
+			
+			// Code to be used if desireb behaviour is turning off location updates when leaving the view.
+//			if(locationManager.updateRunning){
+//				locationManager.toggleLocationUpdates()
+//			}
+		}
 //		.ignoresSafeArea()
 			
 			

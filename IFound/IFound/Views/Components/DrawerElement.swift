@@ -25,9 +25,10 @@ struct DrawerElement: View {
 			
 			PairView(leftText: heading1, rightText: "\(value1.rounded()) m")
 				.padding([.leading, .trailing, .top])
-				PairView(leftText: heading2, rightText: getHeadingContent(value: value2))
+			PairView(leftText: heading2,
+					 rightText: ViewHelper.getHeadingContentForDrawer(value: value2))
 				.padding([.leading, .trailing])
-				PairView(leftText: heading3, rightText: "\(value1.rounded()) km/h")
+			PairView(leftText: heading3, rightText: String(format: "%.2f", ceil(value3*100)/100) + "min/km")
 				.padding([.leading, .trailing, .bottom])
 			
 			
@@ -38,19 +39,6 @@ struct DrawerElement: View {
 		.padding([.leading, .trailing])
 		
     }
-	
-	
-	func getHeadingContent(value: Any) -> String{
-		if(type(of: value) == Double.self){
-			let typedVal = value as! Double
-			return String(typedVal.rounded()) + " m"
-		}else if(type(of: value) == DateInterval.self){
-			let typedVal = value as! DateInterval
-			let components = Calendar.current.dateComponents([.hour, .minute, .second], from: typedVal.start, to: typedVal.end)
-			return "\(components.hour ?? 0):\(components.minute ?? 0):\(components.second ?? 0)"
-		}
-		return "Data not converted \(type(of: value))"
-	}
 }
 
 struct DrawerElement_Previews: PreviewProvider {

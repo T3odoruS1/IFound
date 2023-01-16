@@ -9,7 +9,8 @@ import SwiftUI
 
 struct DrawerButtons: View {
 	@EnvironmentObject var locationManager: AppLocationManager
-
+	@Environment(\.managedObjectContext) var managedObjContext
+	
 
 	
     var body: some View {
@@ -20,6 +21,7 @@ struct DrawerButtons: View {
 						.padding(.top)
 						.foregroundColor(.secondary)
 					Button(action: {
+//						locationManager.setContext(ctx: managedObjContext)
 						locationManager.toggleLocationUpdates()
 					}, label: {
 						Text("")
@@ -36,7 +38,10 @@ struct DrawerButtons: View {
 						.padding(.top)
 						.foregroundColor(.secondary)
 					Button(action: {
-						// Action
+						if(locationManager.updateRunning){
+							locationManager.setCheckPoint()
+						}
+						
 					}, label: {
 						Text("")
 						Label("", systemImage: "flag.checkered").font(.largeTitle).frame(width: 55, height: 55)
@@ -64,39 +69,25 @@ struct DrawerButtons: View {
 					.background(.secondary)
 					.clipShape(Circle())
 				}.padding(.bottom)
-				
-				
-				VStack{
-					Text("Compass")
-						.padding(.top)
-						.foregroundColor(.secondary)
-					Button(action: {
-						// Action
-					}, label: {
-						Text("")
-						Label("", systemImage: "safari").font(.largeTitle).frame(width: 55, height: 55)
-					})
-					.buttonStyle(.bordered)
-					.foregroundColor(.orange)
-					.background(.secondary)
-					.clipShape(Circle())
-				}.padding(.bottom)
-				
+			
 				
 				
 				
 				VStack{
-					Text("Reset")
+					Text("Free view")
 						.padding(.top)
 						.foregroundColor(.secondary)
 					Button(action: {
-						// Action
+						if(locationManager.updateRunning){
+							locationManager.directionPreference = .Free
+						}
+						
 					}, label: {
 						Text("")
-						Label("", systemImage: "arrow.uturn.backward").font(.largeTitle).frame(width: 55, height: 55)
+						Label("", systemImage: "arrow.up.and.down.and.arrow.left.and.right").font(.largeTitle).frame(width: 55, height: 55)
 					})
 					.buttonStyle(.bordered)
-					.foregroundColor(.orange)
+					.foregroundColor(locationManager.directionPreference == .Free ? .red : .orange)
 					.background(.secondary)
 					.clipShape(Circle())
 				}.padding(.bottom)
@@ -106,27 +97,53 @@ struct DrawerButtons: View {
 						.padding(.top)
 						.foregroundColor(.secondary)
 					Button(action: {
-						// Action
+						if(locationManager.updateRunning){
+							locationManager.directionPreference = .CenteredNorthUp
+							locationManager.center()
+						}
+						
+
 					}, label: {
 						Text("")
 						Label("", systemImage: "safari.fill").font(.largeTitle).frame(width: 55, height: 55)
 					})
 					.buttonStyle(.bordered)
-					.foregroundColor(.orange)
+					.foregroundColor(locationManager.directionPreference == .CenteredNorthUp ? .red : .orange)
 					.background(.secondary)
 					.clipShape(Circle())
 				}.padding(.bottom)
 				
 				
 				VStack{
-					Text("Options")
+					Text("Direction Up")
 						.padding(.top)
 						.foregroundColor(.secondary)
 					Button(action: {
-						// Action
+						if(locationManager.updateRunning){
+							locationManager.directionPreference = .CenteredDirectionUp
+							locationManager.center()
+						}
+						
 					}, label: {
 						Text("")
-						Label("", systemImage: "gear").font(.largeTitle).frame(width: 55, height: 55)
+						Label("", systemImage: "arrow.up").font(.largeTitle).frame(width: 55, height: 55)
+					})
+					.buttonStyle(.bordered)
+					.foregroundColor(locationManager.directionPreference == .CenteredDirectionUp ? .red : .orange)
+					.background(.secondary)
+					.clipShape(Circle())
+				}.padding(.bottom)
+				
+				
+				VStack{
+					Text("Map type")
+						.padding(.top)
+						.foregroundColor(.secondary)
+					Button(action: {
+						locationManager.toggleMapType()
+					}, label: {
+						Text("")
+						Label("", systemImage: "rectangle.2.swap").font(.largeTitle).frame(width: 55, height: 55)
 					})
 					.buttonStyle(.bordered)
 					.foregroundColor(.orange)

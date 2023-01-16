@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C3B6D27296C6ACB005DAE30 /* locationTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B6D26296C6ACB005DAE30 /* locationTypes.json */; };
+		7C3B8DB32972E8390061ADB0 /* GradientPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B8DB22972E8390061ADB0 /* GradientPolyline.swift */; };
+		7C3B8DB52972E89F0061ADB0 /* GradientPolylineRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B8DB42972E89F0061ADB0 /* GradientPolylineRenderer.swift */; };
 		7C47FE0429525A2A00AC1F91 /* TrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C47FE0329525A2A00AC1F91 /* TrackingView.swift */; };
 		7C47FE0829525F3000AC1F91 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C47FE0729525F3000AC1F91 /* MapView.swift */; };
+		7C6E8FE52971A46400F75D8E /* ViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E8FE42971A46400F75D8E /* ViewHelper.swift */; };
+		7C6E8FE92971D64000F75D8E /* SessionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E8FE82971D64000F75D8E /* SessionDetailsView.swift */; };
 		7C7882FC29523842005481BC /* IFoundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7882FB29523842005481BC /* IFoundApp.swift */; };
 		7C7882FE29523842005481BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7882FD29523842005481BC /* ContentView.swift */; };
 		7C78830029523843005481BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C7882FF29523843005481BC /* Assets.xcassets */; };
@@ -17,7 +22,6 @@
 		7C78830F29523F95005481BC /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78830E29523F95005481BC /* ActivityView.swift */; };
 		7C78831129523FA5005481BC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78831029523FA5005481BC /* LoginView.swift */; };
 		7C78831329523FB0005481BC /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78831229523FB0005481BC /* HistoryView.swift */; };
-		7C78831529523FBF005481BC /* CompasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78831429523FBF005481BC /* CompasView.swift */; };
 		7C78831729525050005481BC /* AppLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78831629525050005481BC /* AppLocationManager.swift */; };
 		7C7E737D295380A60036CBAD /* RoundIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E737C295380A60036CBAD /* RoundIconButton.swift */; };
 		7C7E73852953975E0036CBAD /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E73842953975E0036CBAD /* OptionsView.swift */; };
@@ -25,11 +29,30 @@
 		7C9BEF2C2953418800BA84CB /* DrawerElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BEF2B2953418800BA84CB /* DrawerElement.swift */; };
 		7C9BEF2E295350F700BA84CB /* DrawerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BEF2D295350F700BA84CB /* DrawerButtons.swift */; };
 		7C9BEF302953562000BA84CB /* DrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BEF2F2953562000BA84CB /* DrawerView.swift */; };
+		7CC0762C29747DCE00D3BF0C /* FieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0762B29747DCE00D3BF0C /* FieldView.swift */; };
+		7CCDEFFF295721B400DB0AC5 /* LocationModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDEFFD295721B400DB0AC5 /* LocationModel.xcdatamodeld */; };
+		7CCDF0252957259400DB0AC5 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF0242957259400DB0AC5 /* DataController.swift */; };
+		7CCDF043295876B500DB0AC5 /* AuthenticationaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF042295876B500DB0AC5 /* AuthenticationaManager.swift */; };
+		7CCDF04C2958A7EE00DB0AC5 /* GpsLocationType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF0462958A7EE00DB0AC5 /* GpsLocationType+CoreDataClass.swift */; };
+		7CCDF04D2958A7EE00DB0AC5 /* GpsLocationType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF0472958A7EE00DB0AC5 /* GpsLocationType+CoreDataProperties.swift */; };
+		7CCDF04E2958A7EE00DB0AC5 /* GpsSession+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF0482958A7EE00DB0AC5 /* GpsSession+CoreDataClass.swift */; };
+		7CCDF04F2958A7EE00DB0AC5 /* GpsSession+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF0492958A7EE00DB0AC5 /* GpsSession+CoreDataProperties.swift */; };
+		7CCDF0542958B40F00DB0AC5 /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF0532958B40F00DB0AC5 /* JsonParser.swift */; };
+		7CCDF0572958B79000DB0AC5 /* GpsLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF0552958B79000DB0AC5 /* GpsLocation+CoreDataClass.swift */; };
+		7CCDF0582958B79000DB0AC5 /* GpsLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF0562958B79000DB0AC5 /* GpsLocation+CoreDataProperties.swift */; };
+		7CCDF05B2958CED700DB0AC5 /* LocationTypeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDF05A2958CED700DB0AC5 /* LocationTypeData.swift */; };
+		7CE3968E29758C9C00719AE7 /* UserPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3968D29758C9C00719AE7 /* UserPageView.swift */; };
+		7CE396902975AB2E00719AE7 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3968F2975AB2E00719AE7 /* DataRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C3B6D26296C6ACB005DAE30 /* locationTypes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = locationTypes.json; path = IFound/locationTypes.json; sourceTree = SOURCE_ROOT; };
+		7C3B8DB22972E8390061ADB0 /* GradientPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPolyline.swift; sourceTree = "<group>"; };
+		7C3B8DB42972E89F0061ADB0 /* GradientPolylineRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPolylineRenderer.swift; sourceTree = "<group>"; };
 		7C47FE0329525A2A00AC1F91 /* TrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingView.swift; sourceTree = "<group>"; };
 		7C47FE0729525F3000AC1F91 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		7C6E8FE42971A46400F75D8E /* ViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHelper.swift; sourceTree = "<group>"; };
+		7C6E8FE82971D64000F75D8E /* SessionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailsView.swift; sourceTree = "<group>"; };
 		7C7882F829523842005481BC /* IFound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IFound.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C7882FB29523842005481BC /* IFoundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFoundApp.swift; sourceTree = "<group>"; };
 		7C7882FD29523842005481BC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -39,7 +62,6 @@
 		7C78830E29523F95005481BC /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		7C78831029523FA5005481BC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7C78831229523FB0005481BC /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		7C78831429523FBF005481BC /* CompasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompasView.swift; sourceTree = "<group>"; };
 		7C78831629525050005481BC /* AppLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocationManager.swift; sourceTree = "<group>"; };
 		7C7E737C295380A60036CBAD /* RoundIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundIconButton.swift; sourceTree = "<group>"; };
 		7C7E73842953975E0036CBAD /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
@@ -47,6 +69,20 @@
 		7C9BEF2B2953418800BA84CB /* DrawerElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerElement.swift; sourceTree = "<group>"; };
 		7C9BEF2D295350F700BA84CB /* DrawerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerButtons.swift; sourceTree = "<group>"; };
 		7C9BEF2F2953562000BA84CB /* DrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerView.swift; sourceTree = "<group>"; };
+		7CC0762B29747DCE00D3BF0C /* FieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldView.swift; sourceTree = "<group>"; };
+		7CCDEFFE295721B400DB0AC5 /* LocationModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocationModel.xcdatamodel; sourceTree = "<group>"; };
+		7CCDF0242957259400DB0AC5 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		7CCDF042295876B500DB0AC5 /* AuthenticationaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationaManager.swift; sourceTree = "<group>"; };
+		7CCDF0462958A7EE00DB0AC5 /* GpsLocationType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GpsLocationType+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7CCDF0472958A7EE00DB0AC5 /* GpsLocationType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GpsLocationType+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7CCDF0482958A7EE00DB0AC5 /* GpsSession+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GpsSession+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7CCDF0492958A7EE00DB0AC5 /* GpsSession+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GpsSession+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7CCDF0532958B40F00DB0AC5 /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
+		7CCDF0552958B79000DB0AC5 /* GpsLocation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GpsLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7CCDF0562958B79000DB0AC5 /* GpsLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GpsLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7CCDF05A2958CED700DB0AC5 /* LocationTypeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTypeData.swift; sourceTree = "<group>"; };
+		7CE3968D29758C9C00719AE7 /* UserPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPageView.swift; sourceTree = "<group>"; };
+		7CE3968F2975AB2E00719AE7 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +97,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C3B8DB12972E81E0061ADB0 /* GradientPolyline */ = {
+			isa = PBXGroup;
+			children = (
+				7C3B8DB22972E8390061ADB0 /* GradientPolyline.swift */,
+				7C3B8DB42972E89F0061ADB0 /* GradientPolylineRenderer.swift */,
+			);
+			path = GradientPolyline;
+			sourceTree = "<group>";
+		};
+		7C6E8FE32971A44D00F75D8E /* ViewHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				7C6E8FE42971A46400F75D8E /* ViewHelper.swift */,
+			);
+			path = ViewHelpers;
+			sourceTree = "<group>";
+		};
 		7C7882EF29523842005481BC = {
 			isa = PBXGroup;
 			children = (
@@ -80,14 +133,15 @@
 		7C7882FA29523842005481BC /* IFound */ = {
 			isa = PBXGroup;
 			children = (
+				7CCDF0592958CEBA00DB0AC5 /* Service.Domain */,
+				7CCDEFFC2957218800DB0AC5 /* Managers */,
 				7C9BEF242953253D00BA84CB /* Info.plist */,
-				7C78830B29523936005481BC /* Components */,
 				7C78830A2952392E005481BC /* Views */,
 				7C78830929523927005481BC /* Domain */,
 				7C7882FB29523842005481BC /* IFoundApp.swift */,
 				7C7882FF29523843005481BC /* Assets.xcassets */,
 				7C78830129523843005481BC /* Preview Content */,
-				7C78831629525050005481BC /* AppLocationManager.swift */,
+				7CCDEFFD295721B400DB0AC5 /* LocationModel.xcdatamodeld */,
 			);
 			path = IFound;
 			sourceTree = "<group>";
@@ -103,6 +157,12 @@
 		7C78830929523927005481BC /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				7CCDF0552958B79000DB0AC5 /* GpsLocation+CoreDataClass.swift */,
+				7CCDF0562958B79000DB0AC5 /* GpsLocation+CoreDataProperties.swift */,
+				7CCDF0462958A7EE00DB0AC5 /* GpsLocationType+CoreDataClass.swift */,
+				7CCDF0472958A7EE00DB0AC5 /* GpsLocationType+CoreDataProperties.swift */,
+				7CCDF0482958A7EE00DB0AC5 /* GpsSession+CoreDataClass.swift */,
+				7CCDF0492958A7EE00DB0AC5 /* GpsSession+CoreDataProperties.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -110,13 +170,15 @@
 		7C78830A2952392E005481BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7C6E8FE32971A44D00F75D8E /* ViewHelpers */,
+				7C78830B29523936005481BC /* Components */,
 				7C7882FD29523842005481BC /* ContentView.swift */,
 				7C78830E29523F95005481BC /* ActivityView.swift */,
 				7C78831029523FA5005481BC /* LoginView.swift */,
 				7C78831229523FB0005481BC /* HistoryView.swift */,
-				7C78831429523FBF005481BC /* CompasView.swift */,
 				7C47FE0329525A2A00AC1F91 /* TrackingView.swift */,
 				7C7E73842953975E0036CBAD /* OptionsView.swift */,
+				7C6E8FE82971D64000F75D8E /* SessionDetailsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -124,14 +186,38 @@
 		7C78830B29523936005481BC /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7C3B8DB12972E81E0061ADB0 /* GradientPolyline */,
 				7C47FE0729525F3000AC1F91 /* MapView.swift */,
 				7C78830C29523A24005481BC /* NavigationCard.swift */,
 				7C9BEF2B2953418800BA84CB /* DrawerElement.swift */,
 				7C9BEF2D295350F700BA84CB /* DrawerButtons.swift */,
 				7C9BEF2F2953562000BA84CB /* DrawerView.swift */,
 				7C7E737C295380A60036CBAD /* RoundIconButton.swift */,
+				7CC0762B29747DCE00D3BF0C /* FieldView.swift */,
+				7CE3968D29758C9C00719AE7 /* UserPageView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		7CCDEFFC2957218800DB0AC5 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				7C3B6D26296C6ACB005DAE30 /* locationTypes.json */,
+				7C78831629525050005481BC /* AppLocationManager.swift */,
+				7CCDF0242957259400DB0AC5 /* DataController.swift */,
+				7CCDF042295876B500DB0AC5 /* AuthenticationaManager.swift */,
+				7CCDF0532958B40F00DB0AC5 /* JsonParser.swift */,
+				7CE3968F2975AB2E00719AE7 /* DataRepository.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		7CCDF0592958CEBA00DB0AC5 /* Service.Domain */ = {
+			isa = PBXGroup;
+			children = (
+				7CCDF05A2958CED700DB0AC5 /* LocationTypeData.swift */,
+			);
+			path = Service.Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C78830329523843005481BC /* Preview Assets.xcassets in Resources */,
+				7C3B6D27296C6ACB005DAE30 /* locationTypes.json in Resources */,
 				7C78830029523843005481BC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,21 +297,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CCDF04F2958A7EE00DB0AC5 /* GpsSession+CoreDataProperties.swift in Sources */,
 				7C7882FE29523842005481BC /* ContentView.swift in Sources */,
+				7C6E8FE52971A46400F75D8E /* ViewHelper.swift in Sources */,
+				7CCDF0542958B40F00DB0AC5 /* JsonParser.swift in Sources */,
 				7C9BEF2C2953418800BA84CB /* DrawerElement.swift in Sources */,
 				7C78831329523FB0005481BC /* HistoryView.swift in Sources */,
+				7CCDF0582958B79000DB0AC5 /* GpsLocation+CoreDataProperties.swift in Sources */,
 				7C7E73852953975E0036CBAD /* OptionsView.swift in Sources */,
 				7C78830F29523F95005481BC /* ActivityView.swift in Sources */,
+				7CE396902975AB2E00719AE7 /* DataRepository.swift in Sources */,
+				7C3B8DB32972E8390061ADB0 /* GradientPolyline.swift in Sources */,
+				7CCDF0572958B79000DB0AC5 /* GpsLocation+CoreDataClass.swift in Sources */,
 				7C47FE0829525F3000AC1F91 /* MapView.swift in Sources */,
+				7C6E8FE92971D64000F75D8E /* SessionDetailsView.swift in Sources */,
 				7C9BEF302953562000BA84CB /* DrawerView.swift in Sources */,
 				7C7882FC29523842005481BC /* IFoundApp.swift in Sources */,
 				7C78831729525050005481BC /* AppLocationManager.swift in Sources */,
+				7CCDF043295876B500DB0AC5 /* AuthenticationaManager.swift in Sources */,
+				7CCDF04E2958A7EE00DB0AC5 /* GpsSession+CoreDataClass.swift in Sources */,
 				7C78831129523FA5005481BC /* LoginView.swift in Sources */,
+				7CC0762C29747DCE00D3BF0C /* FieldView.swift in Sources */,
+				7CCDF05B2958CED700DB0AC5 /* LocationTypeData.swift in Sources */,
+				7CCDF04D2958A7EE00DB0AC5 /* GpsLocationType+CoreDataProperties.swift in Sources */,
 				7C7E737D295380A60036CBAD /* RoundIconButton.swift in Sources */,
-				7C78831529523FBF005481BC /* CompasView.swift in Sources */,
+				7CCDEFFF295721B400DB0AC5 /* LocationModel.xcdatamodeld in Sources */,
+				7CE3968E29758C9C00719AE7 /* UserPageView.swift in Sources */,
+				7CCDF04C2958A7EE00DB0AC5 /* GpsLocationType+CoreDataClass.swift in Sources */,
 				7C47FE0429525A2A00AC1F91 /* TrackingView.swift in Sources */,
 				7C9BEF2E295350F700BA84CB /* DrawerButtons.swift in Sources */,
+				7CCDF0252957259400DB0AC5 /* DataController.swift in Sources */,
 				7C78830D29523A24005481BC /* NavigationCard.swift in Sources */,
+				7C3B8DB52972E89F0061ADB0 /* GradientPolylineRenderer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +556,19 @@
 			productName = Drawer;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		7CCDEFFD295721B400DB0AC5 /* LocationModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7CCDEFFE295721B400DB0AC5 /* LocationModel.xcdatamodel */,
+			);
+			currentVersion = 7CCDEFFE295721B400DB0AC5 /* LocationModel.xcdatamodel */;
+			path = LocationModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7C7882F029523842005481BC /* Project object */;
 }

@@ -8,9 +8,27 @@
 import SwiftUI
 
 struct OptionsView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+	
+	@State private var number: Int = 10
+	var body: some View {
+		NavigationView{
+			ScrollView{
+				VStack{
+					
+					HStack{
+						Spacer()
+						Text("Choose update frequency")
+						Picker("Update frequency", selection: $number){
+							ForEach(Array(stride(from: 10, to: 60, by: 5)), id:\.self){ number in
+								Text("\(number)")
+							}
+						}
+						Spacer()
+					}.padding()
+				}.navigationTitle("Settings")
+			}
+		}
+	}
 }
 
 struct OptionsView_Previews: PreviewProvider {
@@ -18,3 +36,6 @@ struct OptionsView_Previews: PreviewProvider {
         OptionsView()
     }
 }
+
+
+

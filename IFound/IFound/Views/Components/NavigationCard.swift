@@ -24,24 +24,27 @@ struct NavigationCard: View {
                             Text(heading)
                                 .font(.largeTitle)
                                 .padding([.top, .leading])
+								.foregroundColor(.orange)
                             Spacer()
                         } // HStack
                         HStack{
                             Text(explanation)
                                 .font(.body)
                                 .padding([.leading, .bottom])
+								.foregroundColor(.secondary)
                             Spacer()
                         } // HStack
                     } // VStack
                     Spacer()
-                    Image(systemName: sysIcon).font(.title)
+					Image(systemName: sysIcon).font(.title).foregroundColor(.orange)
                     Spacer()
 
                 } // HStack
-                .background(.orange)
+				.background(Color(uiColor: .systemBackground))
                 .cornerRadius(15)
+				
                 .padding([.leading, .bottom, .trailing])
-                .shadow(radius: 5)
+				.shadow(color: .secondary.opacity(0.8), radius: 1)
             }
         
         
