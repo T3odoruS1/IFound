@@ -23,6 +23,8 @@
 		7C78831729525050005481BC /* AppLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C78831629525050005481BC /* AppLocationManager.swift */; };
 		7C7E737D295380A60036CBAD /* RoundIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E737C295380A60036CBAD /* RoundIconButton.swift */; };
 		7C7E73852953975E0036CBAD /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7E73842953975E0036CBAD /* OptionsView.swift */; };
+		7C858C3E297A9F620047FF30 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C858C3D297A9F620047FF30 /* CompassView.swift */; };
+		7C858C40297A9F7D0047FF30 /* CompassHeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C858C3F297A9F7D0047FF30 /* CompassHeading.swift */; };
 		7C9BEF2A29533AAE00BA84CB /* Drawer in Frameworks */ = {isa = PBXBuildFile; productRef = 7C9BEF2929533AAE00BA84CB /* Drawer */; };
 		7C9BEF2C2953418800BA84CB /* DrawerElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BEF2B2953418800BA84CB /* DrawerElement.swift */; };
 		7C9BEF2E295350F700BA84CB /* DrawerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BEF2D295350F700BA84CB /* DrawerButtons.swift */; };
@@ -72,6 +74,8 @@
 		7C78831629525050005481BC /* AppLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocationManager.swift; sourceTree = "<group>"; };
 		7C7E737C295380A60036CBAD /* RoundIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundIconButton.swift; sourceTree = "<group>"; };
 		7C7E73842953975E0036CBAD /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
+		7C858C3D297A9F620047FF30 /* CompassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
+		7C858C3F297A9F7D0047FF30 /* CompassHeading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassHeading.swift; sourceTree = "<group>"; };
 		7C9BEF242953253D00BA84CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7C9BEF2B2953418800BA84CB /* DrawerElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerElement.swift; sourceTree = "<group>"; };
 		7C9BEF2D295350F700BA84CB /* DrawerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerButtons.swift; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 				7C7E737C295380A60036CBAD /* RoundIconButton.swift */,
 				7CC0762B29747DCE00D3BF0C /* FieldView.swift */,
 				7CE3968D29758C9C00719AE7 /* UserPageView.swift */,
+				7C858C3D297A9F620047FF30 /* CompassView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 				7CD24818297817CB00C3787F /* APIRepository.swift */,
 				7CD2481C2978528000C3787F /* APIRepositoryMapper.swift */,
 				7CE3968F2975AB2E00719AE7 /* DataRepository.swift */,
+				7C858C3F297A9F7D0047FF30 /* CompassHeading.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -328,6 +334,7 @@
 				7CCDF04F2958A7EE00DB0AC5 /* GpsSession+CoreDataProperties.swift in Sources */,
 				7C7882FE29523842005481BC /* ContentView.swift in Sources */,
 				7CD248282978726400C3787F /* Reachability.swift in Sources */,
+				7C858C40297A9F7D0047FF30 /* CompassHeading.swift in Sources */,
 				7CD248362978DD3400C3787F /* PreferenceData+CoreDataClass.swift in Sources */,
 				7C6E8FE52971A46400F75D8E /* ViewHelper.swift in Sources */,
 				7C9BEF2C2953418800BA84CB /* DrawerElement.swift in Sources */,
@@ -358,6 +365,7 @@
 				7CD2481D2978528000C3787F /* APIRepositoryMapper.swift in Sources */,
 				7CD2481B29781F9000C3787F /* DecodableStructs.swift in Sources */,
 				7C7E737D295380A60036CBAD /* RoundIconButton.swift in Sources */,
+				7C858C3E297A9F620047FF30 /* CompassView.swift in Sources */,
 				7CCDEFFF295721B400DB0AC5 /* LocationModel.xcdatamodeld in Sources */,
 				7CE3968E29758C9C00719AE7 /* UserPageView.swift in Sources */,
 				7CCDF04C2958A7EE00DB0AC5 /* GpsLocationType+CoreDataClass.swift in Sources */,

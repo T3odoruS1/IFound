@@ -49,6 +49,8 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 	@Published var locationCount: Int = 0
 	@Published var mapType:MKMapType = .standard
 	
+	@Published var showCompass: Bool = false
+	
 	@Published var session: GpsSession?
 	private var sequenceNr: Int = 0
 	var context: NSManagedObjectContext?
@@ -122,6 +124,7 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 		self.updateInterval = updateInterval
 		self.sendUpdates = sendUpdates
 		print("Token set")
+		
 		locationBuffer = LocationBuffer(context: context!, token: token)
 		locationBuffer!.updateFrequency = updateInterval
 		locationBuffer!.updateApi = sendUpdates
@@ -156,15 +159,19 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 				if(updateRunning){
 					polyLineCoordinates.append(curLocation.coordinate)
 				}
+				if(directionPreference != .Free){
+					currentDirecion = curLocation.course
+				}
 				lastSeenLocation = curLocation
-				currentDirecion = curLocation.course
+
 				//				print(currentDirecion)
 				
 				
 			}else{
 				lastSeenLocation = curLocation
-				currentDirecion = curLocation.course
-				sequenceNr += 1
+				if(directionPreference != .Free){
+					currentDirecion = curLocation.course
+				}				
 			} // If
 			
 			
@@ -264,6 +271,7 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 	
 	
 	func toggleLocationUpdates(){
+		showCompass = false
 		updateRunning.toggle()
 		if(updateRunning){
 			locationManager.startUpdatingLocation()

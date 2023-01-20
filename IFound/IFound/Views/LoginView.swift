@@ -29,25 +29,6 @@ struct LoginView: View {
 					Section{
 						if(verticalSizeClass != .compact){
 							Spacer()
-							//							if(isLogin){
-							//								Image(systemName: "person.icloud")
-							//									.font(.system(size: 70))
-							//									.padding()
-							//									.foregroundColor(.orange)
-							//							}
-							//							HStack{
-							//								Text("\(isLogin ? "Login now" : "Register now")")
-							//									.font(.title)
-							//									.bold()
-							//
-							//							}.padding()
-//							Text("\(isLogin ? "Enter your email and password to login" : "Fill the registration form to register")")
-//								.font(.subheadline)
-//								.padding(.horizontal)
-							//							Text("User loged in: \(serviceManager.userLogedIn.description)")
-//							Text(authenticationManager.statusMessage)
-//								.padding()
-//								.foregroundColor(authenticationManager.userLogedIn ? .green : .red)
 							
 						}
 

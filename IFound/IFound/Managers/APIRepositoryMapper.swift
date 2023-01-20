@@ -227,15 +227,12 @@ class APIRepositoryMapper {
 		if(session.sessionId != nil){
 			self.apiRepo.getAllLocationsForSession(sessionId: session.sessionId!, token: token) { fetchedLocations in
 				DispatchQueue.main.async {
-					print("Fetched locations for session session")
-//					print(fetchedLocations)
 					var locations: [GpsLocation] = []
 					for fetchedLocation in fetchedLocations {
 						
 						let loca = self.setLocationFields(session: session, fetchedLocation: fetchedLocation, context: context)
 						locations.append(loca)
-//						print("location saved")
-//						self.dbRepo.save(context: context)
+
 
 					}
 					completion(locations)

@@ -36,7 +36,7 @@ struct OptionsView: View {
 					.toggleStyle(.switch)
 					.padding()
 				
-
+				
 				Spacer()
 				Button("Save preferences", action: {
 					prefController.updateFrequency = number

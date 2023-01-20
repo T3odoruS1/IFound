@@ -14,14 +14,6 @@ struct FieldView: View {
 	
 	var body: some View{
 		VStack{
-			//			HStack(alignment: .bottom){
-			//				Text("\(upperText)")
-			//					.font(.title3)
-			//					.fontWeight(.semibold)
-			//					.multilineTextAlignment(.leading)
-			//					.padding([.leading, .trailing])
-			//				Spacer()
-			//			}
 			TextField("", text: $fieldValue)
 				.padding([.bottom, .trailing, .leading])
 				.textFieldStyle(.plain)

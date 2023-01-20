@@ -18,7 +18,7 @@ struct SessionDetailsView: View {
 	
 	var session: GpsSession
 	
-    var body: some View {
+	var body: some View {
 		ScrollView{
 			VStack{
 				Section{
@@ -119,17 +119,17 @@ struct SessionDetailsView: View {
 				}
 			}
 		}
-//		}.onAppear {
-//			shouldReload = true
-//	 }.onDisappear {
-//		 shouldReload = false
-//	 }
-    }
+		//		}.onAppear {
+		//			shouldReload = true
+		//	 }.onDisappear {
+		//		 shouldReload = false
+		//	 }
+	}
 }
 
 struct SessionDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
+	static var previews: some View {
 		Text("Session details")
-//		SessionDetailsView(session: GpsSession(), shouldReloadChildView: false)
-    }
+		//		SessionDetailsView(session: GpsSession(), shouldReloadChildView: false)
+	}
 }

@@ -134,6 +134,25 @@ struct DrawerButtons: View {
 					.clipShape(Circle())
 				}.padding(.bottom)
 				
+					
+					if(!locationManager.updateRunning || locationManager.directionPreference == .Free){
+						VStack{
+							Text("Compass")
+								.padding(.top)
+								.foregroundColor(.secondary)
+							Button(action: {
+								locationManager.showCompass.toggle()
+							}, label: {
+								Text("")
+								Label("", systemImage: "safari").font(.largeTitle).frame(width: 55, height: 55)
+							})
+							.buttonStyle(.bordered)
+							.foregroundColor(.orange)
+							.background(.secondary)
+							.clipShape(Circle())
+						}.padding(.bottom)
+					
+				}
 				
 				VStack{
 					Text("Map type")

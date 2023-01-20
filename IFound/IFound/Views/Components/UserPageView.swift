@@ -13,9 +13,9 @@ struct UserPageView: View {
 	@Environment(\.horizontalSizeClass) var horizontalSizeClass
 	@Environment(\.verticalSizeClass) var verticalSizeClass
 	@Environment (\.dismiss) var dismiss
-
 	
-    var body: some View {
+	
+	var body: some View {
 		VStack{
 			Text("Welcome \(authenticationManager.authResponse?.firstName ?? "noname")!")
 				.font(Font.title.bold())
@@ -24,9 +24,9 @@ struct UserPageView: View {
 			Text("You are loged in and can enjoy full functionality of this app 😎")
 				.foregroundColor(.primary)
 				.padding()
-				
+			
 			Spacer()
-
+			
 			Text("While you are loged in all your sessions will be sent to the **sportmap.akaver.com** website").padding()
 			
 			Button("Logout", action:
@@ -39,11 +39,11 @@ struct UserPageView: View {
 			.font(.title)
 			.foregroundColor(.orange)
 		}.padding()
-    }
+	}
 }
 
 struct UserPageView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserPageView()
-    }
+	static var previews: some View {
+		UserPageView()
+	}
 }
