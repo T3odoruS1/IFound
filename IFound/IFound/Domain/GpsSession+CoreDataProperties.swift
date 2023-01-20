@@ -33,12 +33,16 @@ extension GpsSession {
     @NSManaged public var paceMax: Double
     @NSManaged public var paceMin: Double
     @NSManaged public var appUserId: String?
+	@NSManaged public var type: String?
+	@NSManaged public var saved: Bool
+	@NSManaged public var typeId: String?
     @NSManaged public var locations: NSSet?
 	
 	public var wrappedLocations: [GpsLocation] {
 		let locations = locations as? Set<GpsLocation> ?? []
+		if (locations .count < 2) {return []}
 		return locations.sorted {
-			$0.sequenceNr < $1.sequenceNr
+			$0.recordedAt! < $1.recordedAt!
 		}
 	}
 	
@@ -97,6 +101,25 @@ extension GpsSession {
 			}
 		}
 		return checkpointLocs
+	}
+	
+	public var waypointLocations : [CLLocation]{
+		var checkpointLocs: [CLLocation] = []
+		for loc in wrappedLocations {
+			if(loc.type?.name == "WP"){
+				checkpointLocs.append(CLLocation(latitude: loc.lat, longitude: loc.lon))
+			}
+		}
+		return checkpointLocs
+	}
+	
+	public var fullySaved: Bool {
+		for location in wrappedLocations {
+			if(!location.saved){
+				return false
+			}
+		}
+		return saved
 	}
 
 }

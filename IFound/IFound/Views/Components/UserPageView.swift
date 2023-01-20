@@ -9,6 +9,7 @@ import SwiftUI
 
 struct UserPageView: View {
 	@EnvironmentObject var authenticationManager: AuthenticationaManager
+	@Environment (\.managedObjectContext) var managedObjContext
 	@Environment(\.horizontalSizeClass) var horizontalSizeClass
 	@Environment(\.verticalSizeClass) var verticalSizeClass
 	@Environment (\.dismiss) var dismiss
@@ -16,20 +17,21 @@ struct UserPageView: View {
 	
     var body: some View {
 		VStack{
-			Text("Welcome Edgar Vildt!")
-				.font(.largeTitle)
+			Text("Welcome \(authenticationManager.authResponse?.firstName ?? "noname")!")
+				.font(Font.title.bold())
 				.padding()
 			
-			Text("User test.test@test.com created and logged in.")
+			Text("You are loged in and can enjoy full functionality of this app 😎")
 				.foregroundColor(.primary)
+				.padding()
 				
 			Spacer()
 
-			Text("While you are loged in all your sessions will be sent to the **Swagger** website")
+			Text("While you are loged in all your sessions will be sent to the **sportmap.akaver.com** website").padding()
 			
 			Button("Logout", action:
 					{
-				authenticationManager.logout()
+				authenticationManager.logout(context: managedObjContext)
 				dismiss()
 			})
 			.padding()

@@ -28,7 +28,7 @@ struct DrawerElement: View {
 			PairView(leftText: heading2,
 					 rightText: ViewHelper.getHeadingContentForDrawer(value: value2))
 				.padding([.leading, .trailing])
-			PairView(leftText: heading3, rightText: String(format: "%.2f", ceil(value3*100)/100) + "min/km")
+			PairView(leftText: heading3, rightText: String(format: "%.2f",(16.666666667/value3 == .infinity ? 0.00 : 16.666666667/value3)) + "min/km")
 				.padding([.leading, .trailing, .bottom])
 			
 			

@@ -12,6 +12,8 @@ struct LoginView: View {
 	@Environment(\.horizontalSizeClass) var horizontalSizeClass
 	@Environment(\.verticalSizeClass) var verticalSizeClass
 	@EnvironmentObject var authenticationManager: AuthenticationaManager
+	@Environment (\.managedObjectContext) var managedObjContext
+
 	
 	@State var email: String = ""
 	@State var password: String = ""
@@ -39,70 +41,105 @@ struct LoginView: View {
 							//									.bold()
 							//
 							//							}.padding()
-							Text("\(isLogin ? "Enter your email and password to login" : "Fill the registration form to register")")
-								.font(.subheadline)
-								.padding(.horizontal)
+//							Text("\(isLogin ? "Enter your email and password to login" : "Fill the registration form to register")")
+//								.font(.subheadline)
+//								.padding(.horizontal)
 							//							Text("User loged in: \(serviceManager.userLogedIn.description)")
-							Text(authenticationManager.statusMessage)
-								.padding()
-								.foregroundColor(authenticationManager.userLogedIn ? .green : .red)
+//							Text(authenticationManager.statusMessage)
+//								.padding()
+//								.foregroundColor(authenticationManager.userLogedIn ? .green : .red)
 							
 						}
-						
-						if(isLogin){
-							Spacer()
-							Spacer()
-						}
+
 					}
 					Section{
 						
 						Picker(selection: $isLogin, label: Text("Login or register")){
-							Text("Login").tag(true).padding()
-							Text("Register").tag(false).padding()
+							Text("Login").tag(true)
+								.padding()
+								.font(.title)
+							Text("Register").tag(false)
+								.padding()
+								.font(.title)
 						}
 						.pickerStyle(SegmentedPickerStyle())
-						.background(.orange)
 						.cornerRadius(8)
+						.foregroundColor(.orange)
 						.padding()
 						
 						VStack{
 							
-							FieldView(fieldValue: $email, placeHolderText: "Email")
+							HStack{
+								Text("Email")
+									.padding(.leading)
+									.font(Font.title3.bold())
+									.foregroundColor(.orange)
+								
+								Spacer()
+							}.padding(.trailing)
+							TextField("yourEmail@example.com", text: $email)
+								.padding([.bottom, .leading])
+								.textFieldStyle(.roundedBorder)
+								.autocapitalization(.none)
+								.font(.title3)
 							
-							SecureField("", text: $password)
-								.padding([.bottom, .trailing, .leading])
-								.textFieldStyle(.plain)
-								.offset(y:17)
-								.placeholder(when: password.isEmpty, placeholder: {
-									Text("Password")
-										.fontWeight(.bold)
-										.font(.title3)
-										.padding([.top, .leading])
-										.offset(y:17)
-								})
-							
-							Rectangle ()
-								.frame (minWidth: 350, minHeight: 3, maxHeight: 3)
-								.padding([.leading, .trailing, .bottom])
-								.foregroundColor (.orange)
+							HStack{
+								Text("Password")
+									.padding(.leading)
+									.font(Font.title3.bold())
+									.foregroundColor(.orange)
+								Spacer()
+							}.padding(.trailing)
+							SecureField("Yourp5ssw0rd", text: $password)
+								.padding([.bottom, .leading])
+								.textFieldStyle(.roundedBorder)
+								.font(.title3)
 							
 							if(!isLogin){
 								
-								FieldView(fieldValue: $firstName, placeHolderText: "First name")
+								HStack{
+									Text("First Name")
+										.padding(.leading)
+										.font(Font.title3.bold())
+										.foregroundColor(.orange)
+									Spacer()
+								}.padding(.trailing)
+								TextField("yourEmail@example.com", text: $firstName)
+									.padding([.bottom, .leading])
+									.textFieldStyle(.roundedBorder)
+									.autocapitalization(.none)
+									.font(.title3)
+									
 								
-								FieldView(fieldValue: $lastName, placeHolderText: "Last name")
+								HStack{
+									Text("Last Name")
+										.padding(.leading)
+										.font(Font.title3.bold())
+										.foregroundColor(.orange)
+									Spacer()
+								}.padding(.trailing)
+								TextField("yourEmail@example.com", text: $lastName)
+									.padding([.bottom, .leading])
+									.textFieldStyle(.roundedBorder)
+									.autocapitalization(.none)
+									.font(.title3)
 							}
+							Spacer()
+
 						}
 					}
 					.frame(maxWidth: 600)
 					
 					Section{
+
 						HStack{
 							if(isLogin){
 								Button("Login", action: {
 									Task{
 										authenticationManager.loginRequest(email: email,
-																		   password: password)
+																		   password: password,
+																		   context: managedObjContext
+										)
 										
 									}
 									
@@ -120,7 +157,9 @@ struct LoginView: View {
 										authenticationManager.registerRequest(email: email,
 																			  password: password,
 																			  lastName: lastName,
-																			  firstName: firstName)
+																			  firstName: firstName,
+																			context: managedObjContext
+										)
 									}
 									
 								})
@@ -137,7 +176,9 @@ struct LoginView: View {
 			}
 			UserPageView()
 				.environmentObject(authenticationManager)
-		}.navigationViewStyle(StackNavigationViewStyle())
+				.environment(\.managedObjectContext, managedObjContext)
+		}.navigationViewStyle(.stack)
+			.navigationTitle(!authenticationManager.userLogedIn ? (isLogin ? "Login" : "Register") : "Profile")
 	}
 }
 

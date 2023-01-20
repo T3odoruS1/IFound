@@ -21,6 +21,7 @@ struct MapView: UIViewRepresentable {
 	var checkpointCoordinates: [CLLocation] = []
 	var mapType: MKMapType = .standard
 	var scrollEnabled: Bool = true
+	var waypointCoords: CLLocationCoordinate2D? = nil
 	
 	
 	
@@ -105,38 +106,34 @@ struct MapView: UIViewRepresentable {
 		for coord in checkpointCoordinates{
 			//			let pin = MKPlacemark(coordinate: coord.coordinate, addressDictionary: nil)
 			let myAnnotation = MKPointAnnotation()
+			myAnnotation.title = "CP"
 			myAnnotation.coordinate = coord.coordinate
 			let annotationView = MKPinAnnotationView(annotation: myAnnotation, reuseIdentifier: "myAnnotation")
 			annotationView.canShowCallout = false
 			view.addAnnotation(myAnnotation)
 		}
-		view.mapType = mapType
-//		let polyline = MKPolyline(coordinates: polylineCoordinates, count: polylineCoordinates.count)
-//		view.addOverlay(polyline)
-//		view.removeOverlays(view.overlays.dropLast())
-//		generatePolyline(locations: polylineCoordinates, speeds: speeds, in: view)
 		
-		var locations: [CLLocation] = []
-		var i = 0
-		for coordinate in polylineCoordinates {
-			let location = CLLocation(
-				coordinate: coordinate,
-				altitude: CLLocationDistance(0),
-				horizontalAccuracy: 0,
-				verticalAccuracy: 0,
-				course: 0,
-				speed: speeds[i],
-				timestamp: Date())
+		if let wpCoords = waypointCoords {
+			for annotation in view.annotations {
+				if(annotation.title == "WP") {
+					view.removeAnnotation(annotation)
+					break;
+				}
+			}
+			let myAnnotation = MKPointAnnotation()
+			myAnnotation.title = "WP"
+			myAnnotation.coordinate = wpCoords
+			let annotationView = MKPinAnnotationView(annotation: myAnnotation, reuseIdentifier: "Waypoint")
+			annotationView.canShowCallout = false
 			
-			locations.append(location)
-			i += 1
-			
+			view.addAnnotation(myAnnotation)
 		}
-		let runRoute = GradientPolyline(locations: locations)
-		view.addOverlay(runRoute)
-//		let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(context.coordinator.markWaypoint))
-//		gestureRecognizer.minimumPressDuration = 0.3
-//		view.addGestureRecognizer(gestureRecognizer)
+		
+		view.mapType = mapType
+		
+		let polyline = MKPolyline(coordinates: polylineCoordinates, count: polylineCoordinates.count)
+		view.addOverlay(polyline)
+		view.removeOverlays(view.overlays.dropLast())
 		
 	}
 	
@@ -147,40 +144,7 @@ struct MapView: UIViewRepresentable {
 		let centerCoordinateDistance = max(distanceLatitude, distanceLongitude)
 		return pow(centerCoordinateDistance, 1.1) > 1000 ? pow(centerCoordinateDistance, 1.1) : 1000
 	}
-	
-//	func generatePolyline(locations: [CLLocationCoordinate2D], speeds: [Double], in mapView: MKMapView){
-//		var colorSegments: [(locations: [CLLocationCoordinate2D], color: UIColor)] = []
-//		var currentSegmentLocations: [CLLocationCoordinate2D] = []
-//		var currentSegmentColor: UIColor = .green
-//		for (index, location) in locations.enumerated() {
-//			let speed = speeds[index]
-//			let color: UIColor
-//			if speed < 10 {
-//				color = .green
-//			} else if speed < 6 {
-//				color = .yellow
-//			} else if speed < 3 {
-//				color = .orange
-//			} else{
-//				color = .red
-//			}
-//			if color != currentSegmentColor {
-//				colorSegments.append((locations: currentSegmentLocations, color: currentSegmentColor))
-//				currentSegmentLocations = []
-//				currentSegmentColor = color
-//			}
-//			currentSegmentLocations.append(location)
-//		}
-//		colorSegments.append((locations: currentSegmentLocations, color: currentSegmentColor))
-//		for segment in colorSegments {
-//			let polyline = MKPolyline(coordinates: segment.locations.map { $0 }, count: segment.locations.count)
-//			let renderer = MKPolylineRenderer(polyline: polyline)
-//			renderer.strokeColor = segment.color
-//			mapView.addOverlay(polyline)
-////			mapView.removeOverlays(mapView.overlays.dropLast())
-//		}
-//
-//	}
+
 	
 }
 
@@ -195,20 +159,14 @@ class Coordinator: NSObject, MKMapViewDelegate {
 	
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 		
-//		if let routePolyline = overlay as? MKPolyline {
-//			let renderer =  MKPolylineRenderer(polyline: routePolyline)
-//
-//			renderer.strokeColor = UIColor.orange
-//			renderer.lineWidth = 6
-//			return renderer
-//		}
-		if overlay is GradientPolyline {
-			let polyLineRender = GradidentPolylineRenderer(overlay: overlay)
-			polyLineRender.lineWidth = 7
-			return polyLineRender
+		if let routePolyline = overlay as? MKPolyline {
+			let renderer =  MKPolylineRenderer(polyline: routePolyline)
+
+			renderer.strokeColor = UIColor.orange
+			renderer.lineWidth = 6
+			return renderer
 		}
 
-		
 		return MKOverlayRenderer()
 	}
 	

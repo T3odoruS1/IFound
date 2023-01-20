@@ -28,7 +28,7 @@ struct DrawerButtons: View {
 						Label("", systemImage: "playpause").font(.largeTitle).frame(width: 55, height: 55)
 					})
 					.buttonStyle(.bordered)
-					.foregroundColor(.orange)
+					.foregroundColor(locationManager.updateRunning ? .red : .orange)
 					.background(.secondary)
 					.clipShape(Circle())
 				}.padding(.bottom)
@@ -59,7 +59,7 @@ struct DrawerButtons: View {
 						.padding(.top)
 						.foregroundColor(.secondary)
 					Button(action: {
-						// Action
+						locationManager.setWayPoint()
 					}, label: {
 						Text("")
 						Label("", systemImage: "mappin.and.ellipse").font(.largeTitle).frame(width: 55, height: 55)

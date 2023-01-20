@@ -67,7 +67,7 @@ struct DrawerView: View {
 								  heading2: "Straight line distance: ",
 								  heading3: "Average speed: ",
 								  value1: locationManager.fromWaypointDistanceTraveled,
-								  value2: locationManager.toWayPointDistance,
+								  value2: locationManager.fromWaypointDistanceStraight,
 								  value3: locationManager.sinceWaypointSetAvgSpeed)
 					Spacer().frame(height: 55)
 				}

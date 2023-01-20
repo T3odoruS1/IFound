@@ -7,7 +7,7 @@
         <attribute name="locationId" optional="YES" attributeType="String"/>
         <attribute name="lon" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="recordedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="sequenceNr" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="saved" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="speed" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="verticalAccuracy" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GpsSession" inverseName="locations" inverseEntity="GpsSession"/>
@@ -22,7 +22,7 @@
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GpsLocation" inverseName="type" inverseEntity="GpsLocation"/>
     </entity>
     <entity name="GpsSession" representedClassName="GpsSession" syncable="YES">
-        <attribute name="appUserId" optional="YES" attributeType="String"/>
+        <attribute name="appUserId" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="climb" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="descend" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="descr" optional="YES" attributeType="String"/>
@@ -32,8 +32,21 @@
         <attribute name="paceMax" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="paceMin" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="recordedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="saved" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="sessionId" optional="YES" attributeType="String"/>
         <attribute name="speed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="typeId" optional="YES" attributeType="String"/>
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GpsLocation" inverseName="session" inverseEntity="GpsLocation"/>
+    </entity>
+    <entity name="PreferenceData" representedClassName="PreferenceData" syncable="YES">
+        <attribute name="sendUpdates" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="updateFreq" optional="YES" attributeType="Integer 16" defaultValueString="10" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="UserData" representedClassName="UserData" syncable="YES">
+        <attribute name="firstName" optional="YES" attributeType="String"/>
+        <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="token" optional="YES" attributeType="String"/>
     </entity>
 </model>

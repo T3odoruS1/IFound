@@ -9,33 +9,58 @@ import SwiftUI
 
 struct OptionsView: View {
 	
-	@State private var number: Int = 10
+	@State  var number: Int
+	@State  var sendUpdates: Bool
+	@EnvironmentObject var prefController: PreferenceController
+	@Environment (\.managedObjectContext) var managedObjContext
+	@Environment (\.dismiss) var dismiss
+	
+	
+	
 	var body: some View {
 		NavigationView{
-			ScrollView{
-				VStack{
-					
-					HStack{
-						Spacer()
-						Text("Choose update frequency")
-						Picker("Update frequency", selection: $number){
-							ForEach(Array(stride(from: 10, to: 60, by: 5)), id:\.self){ number in
-								Text("\(number)")
-							}
+			
+			VStack{
+				Spacer()
+				HStack{
+					Text("Choose update frequency(amount of locations)")
+					Spacer()
+					Picker("Update frequency", selection: $number){
+						ForEach(Array(stride(from: 5, to: 60, by: 5)), id:\.self){ number in
+							Text("\(number)")
 						}
-						Spacer()
-					}.padding()
-				}.navigationTitle("Settings")
-			}
-		}
+					}.pickerStyle(.wheel)
+				}.padding()
+				
+				Toggle("Send updates", isOn: $sendUpdates)
+					.toggleStyle(.switch)
+					.padding()
+				
+
+				Spacer()
+				Button("Save preferences", action: {
+					prefController.updateFrequency = number
+					prefController.sendUpdatesActive = sendUpdates
+					DataRepository().savePrefs(preft: prefController, context: managedObjContext)
+					dismiss()
+				})
+				.padding()
+				.buttonStyle(.bordered)
+				.font(.title)
+				.foregroundColor(.orange)
+			}.frame(maxWidth: 600)
+			
+		}.onAppear{
+			let n = prefController.updateFrequency
+			number = n
+			let s = prefController.sendUpdatesActive
+			sendUpdates = s
+		}.navigationViewStyle(.stack)
+			.navigationTitle("Settings")
 	}
 }
 
-struct OptionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        OptionsView()
-    }
-}
+
 
 
 

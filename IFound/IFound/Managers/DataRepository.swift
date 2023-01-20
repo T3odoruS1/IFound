@@ -62,6 +62,16 @@ class DataRepository: ObservableObject{
 		}
 	}
 	
+	func isTypesEmpty(context: NSManagedObjectContext) -> Bool{
+		if(types.isEmpty){
+			types = getTypes(context: context)
+			if(types.isEmpty){
+				return true
+			}
+		}
+		return false
+	}
+	
 	func parse(json: Data) -> [LocaionTypeData] {
 		var items: [LocaionTypeData] = []
 		let decoder = JSONDecoder()
@@ -79,8 +89,11 @@ class DataRepository: ObservableObject{
 		
 		// Setting the parameters
 		session.appUserId = appUserId
-		session.sessionId = UUID().description
+		session.sessionId = nil
+		session.saved = false
 		session.recordedAt = Date()
+		session.name = " "
+		session.descr = " "
 		
 		save(context: context)
 		print("Session was saved to the database \(String(describing: session.sessionId))")
@@ -92,19 +105,23 @@ class DataRepository: ObservableObject{
 		context: NSManagedObjectContext,
 		description: String? = nil,
 		name: String? = nil,
+		// seconds per km
 		speed: Double? = nil,
 		climb: Double? = nil,
 		descend: Double? = nil,
+		// m
 		distance: Double? = nil,
 		duration: Double? = nil,
+		// seconds per km
 		paceMax: Double? = nil,
+		// seconds per km
 		paceMin: Double? = nil,
 		appUserId: String? = nil
 	){
 		
 		// Updating the parameters
-		session.descr = description
-		session.name = name
+		session.descr = description ?? session.descr
+		session.name = name ?? session.name
 		session.speed = speed ?? session.speed
 		session.climb = climb ?? session.climb
 		session.descend = descend ?? session.descend
@@ -112,7 +129,8 @@ class DataRepository: ObservableObject{
 		session.duration = duration ?? session.duration
 		session.paceMax = paceMax ?? session.paceMax
 		session.paceMin = paceMin ?? session.paceMin
-		session.appUserId = appUserId ?? ""
+		session.appUserId = appUserId ?? session.appUserId
+		
 		save(context: context)
 		print("Session was updated \(String(describing: session.sessionId?.description))")
 	} // edit Session
@@ -129,22 +147,24 @@ class DataRepository: ObservableObject{
 		alt: Double,
 		speed: Double,
 		verticalAccuracy: Double
-	) {
+	) -> GpsLocation {
 		let location = GpsLocation(context: context)
 		location.locationId = UUID().description
 		location.session = session
 		location.recordedAt = Date()
 		location.speed = speed
-		location.sequenceNr = sequenceNr
 		location.lat = lat
 		location.lon = lon
 		location.verticalAccuracy = verticalAccuracy
 		location.alt = alt
+		location.saved = false
 		location.accuracy = accuracy
 		location.type = locationType
 		
 		save(context: context)
 		print("Location added")
+		
+		return location
 		
 	}
 	
@@ -217,6 +237,35 @@ class DataRepository: ObservableObject{
 			}
 		}
 	}
+	
+	func getSessionById(sessionId: String, context: NSManagedObjectContext) -> GpsSession? {
+		// Create a request for the GpsSession entity
+		let fetchRequest: NSFetchRequest<GpsSession> = GpsSession.fetchRequest()
+		fetchRequest.predicate = NSPredicate(format: "sessionId == %@", sessionId)
+
+		// Execute the fetch request
+		do {
+			let gpsSessions = try context.fetch(fetchRequest)
+			return gpsSessions.first
+		} catch {
+			print("Error fetching GpsSession by sessionId: \(error)")
+			return nil
+		}
+	}
+	
+	func getLocationTypeById(locationTypeId: String, context: NSManagedObjectContext) -> GpsLocationType? {
+		let fetchRequest = GpsLocationType.fetchRequest()
+		fetchRequest.predicate = NSPredicate(format: "typeId == %@", locationTypeId)
+		
+		do{
+			let type = try context.fetch(fetchRequest)
+			return type.first
+		}catch {
+			print("No location type was fetched from database")
+			return nil
+		}
+	}
+
 
 
 	
@@ -243,6 +292,52 @@ class DataRepository: ObservableObject{
 			print("Error: Trying to convert JSON data to string")
 			return
 		}
+	}
+	
+	func saveUserData(authResponse: AuthResponse, context: NSManagedObjectContext) {
+		let userData = UserData(context: context)
+		userData.token = authResponse.token
+		userData.firstName = authResponse.firstName
+		userData.lastName = authResponse.lastName
+		userData.status = authResponse.status
+		self.save(context: context)
+	}
+	
+	func getUserData(context: NSManagedObjectContext) -> UserData?{
+		let fetchRequest = UserData.fetchRequest() as NSFetchRequest<UserData>
+		let dataArray = try? context.fetch(fetchRequest)
+		return dataArray?.first ?? nil
+	}
+	
+	func deleteAccountSessions(context: NSManagedObjectContext){
+		let sessions = getSessions(context: context)
+		for session in sessions {
+			if(session.appUserId != nil || session.saved){
+				context.delete(session)
+				
+			}
+		}
+		save(context: context)
+	}
+	
+	func savePrefs(preft: PreferenceController, context: NSManagedObjectContext){
+		let deleteRequest = NSBatchDeleteRequest(fetchRequest: PreferenceData.fetchRequest())
+		do{
+			try context.execute(deleteRequest)
+		}catch {
+			print("error deleting \(error)")
+		}
+		let preferences = PreferenceData(context: context)
+		preferences.sendUpdates = preft.sendUpdatesActive
+		preferences.updateFreq = Int16(preft.updateFrequency)
+		print("Saved prefs: \(preferences)")
+		save(context: context)
+	}
+	
+	func getPreferences(context: NSManagedObjectContext) -> PreferenceData? {
+		let fetchRequest = PreferenceData.fetchRequest() as NSFetchRequest<PreferenceData>
+		let dataArray = try? context.fetch(fetchRequest)
+		return dataArray?.first ?? nil
 	}
 	
 }

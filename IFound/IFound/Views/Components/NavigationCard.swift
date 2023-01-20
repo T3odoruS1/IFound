@@ -22,7 +22,7 @@ struct NavigationCard: View {
                     VStack{
                         HStack{
                             Text(heading)
-                                .font(.largeTitle)
+								.font(Font.largeTitle)
                                 .padding([.top, .leading])
 								.foregroundColor(.orange)
                             Spacer()

@@ -38,7 +38,8 @@ struct TrackingView: View {
 					polylineCoordinates: locationManager.polyLineCoordinates,
 					speeds: locationManager.speeds,
 					checkpointCoordinates: locationManager.checkpointCoordinates,
-					mapType: locationManager.mapType
+					mapType: locationManager.mapType,
+					waypointCoords: locationManager.wayPointCoords
 					
 				)
 				.alert(isPresented: .constant(true)){
@@ -50,7 +51,7 @@ struct TrackingView: View {
 				
 				if(horizontalSizeClass == .compact && verticalSizeClass == .regular){
 					VStack(spacing: 4){
-						DrawerView(heights: .constant([CGFloat(60), CGFloat(200), CGFloat(660)]))
+						DrawerView(heights: .constant([CGFloat(100), CGFloat(200), CGFloat(660)]))
 							.environmentObject(locationManager)
 					
 				} // VStack
@@ -59,7 +60,7 @@ struct TrackingView: View {
 						
 
 						Spacer().frame(width: 30, height: 30)
-						DrawerView(heights: .constant([CGFloat(60), CGFloat(200), CGFloat(330)]))
+						DrawerView(heights: .constant([CGFloat(100), CGFloat(200), CGFloat(330)]))
 							.environmentObject(locationManager)
 							.padding(.leading)
 						

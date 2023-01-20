@@ -30,9 +30,12 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 	var fromCheckPointSpeeds: [CLLocationSpeed] =  []
 	
 	// To next Waypoint
+	@Published var wayPointCoords: CLLocationCoordinate2D? = nil
+	@Published var fromWaypointDistanceStraight: Double = 0
 	@Published var fromWaypointDistanceTraveled: Double = 0
-	@Published var toWayPointDistance: Double = 0
 	@Published var sinceWaypointSetAvgSpeed: Double = 0
+	var fromWPSpeeds: [CLLocationSpeed] = []
+	
 	
 	@Published var directionPreference: ECameraType = .CenteredNorthUp
 	@Published var polyLineCoordinates: [CLLocationCoordinate2D] = []
@@ -50,13 +53,19 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 	private var sequenceNr: Int = 0
 	var context: NSManagedObjectContext?
 	private var mapTypeList:[MKMapType] = [.standard, .mutedStandard, .hybrid, .hybridFlyover, .satellite, .satelliteFlyover]
+	let reachability = try! Reachability()
 	
+	var locationBuffer: LocationBuffer? = nil
+	var token: String? = nil
 	private let	locationManager: CLLocationManager
 	var Ltypes: [GpsLocationType]?
 	var locType: GpsLocationType?
 	var wpType: GpsLocationType?
 	var cpType: GpsLocationType?
 	var repo: DataRepository = DataRepository()
+	let APIMapper : APIRepositoryMapper = APIRepositoryMapper()
+	var updateInterval = 0
+	var sendUpdates: Bool = true
 	
 	override init() {
 		locationManager = CLLocationManager()
@@ -71,7 +80,7 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 		// Request updates
 		//		overallTime.start = Date()
 		//		locationManager.startUpdatingLocation()
-//		locationManager.requestLocation()
+		//		locationManager.requestLocation()
 		
 		
 		
@@ -85,7 +94,7 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 				continue
 			}
 			if(type.name == "WP"){
-			wpType = type
+				wpType = type
 				continue
 			}
 			if(type.name == "CP"){
@@ -108,6 +117,16 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 		print("correct data repo added")
 	}
 	
+	func prepareForApiCalls(token: String, updateInterval: Int, sendUpdates: Bool){
+		self.token = token
+		self.updateInterval = updateInterval
+		self.sendUpdates = sendUpdates
+		print("Token set")
+		locationBuffer = LocationBuffer(context: context!, token: token)
+		locationBuffer!.updateFrequency = updateInterval
+		locationBuffer!.updateApi = sendUpdates
+	}
+	
 	// On auth change
 	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager){
 		authorizationStatus = manager.authorizationStatus
@@ -119,11 +138,19 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 		
 		for curLocation in locations {
 			if(lastSeenLocation != nil){
+				if(lastSeenLocation!.distance(from: curLocation) > 40){
+					// FIltering jumps
+					return
+				}
 				overallDistance += lastSeenLocation!.distance(from: curLocation)
 				sequenceNr += 1
 				if(checkpointCoordinates.count != 0){
+					
 					fromCheckpointDistanceTraveled += lastSeenLocation!.distance(from: curLocation)
 					fromCheckpointDistanceStraight = lastSeenLocation!.distance(from: checkpointCoordinates.last.unsafelyUnwrapped)
+				}
+				if(wayPointCoords != nil){
+					fromWaypointDistanceTraveled += lastSeenLocation!.distance(from: curLocation)
 				}
 				
 				if(updateRunning){
@@ -131,17 +158,17 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 				}
 				lastSeenLocation = curLocation
 				currentDirecion = curLocation.course
-//				print(currentDirecion)
-
-
+				//				print(currentDirecion)
+				
+				
 			}else{
 				lastSeenLocation = curLocation
 				currentDirecion = curLocation.course
 				sequenceNr += 1
 			} // If
-			speeds.append(16.666666667 / lastSeenLocation!.speed)
-			fromCheckPointSpeeds.append(16.666666667 / lastSeenLocation!.speed)
-			repo.addLocation(
+			
+			
+			let location = repo.addLocation(
 				session: session!,
 				context: context!,
 				locationType: locType!,
@@ -153,20 +180,60 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 				speed: lastSeenLocation!.speed,
 				verticalAccuracy: lastSeenLocation!.verticalAccuracy
 			)
-			
-			overallTime.end = Date()
-			var sum = 0.0
-			for speed in speeds {
-				sum += speed as Double
-			}
-			overallAvgSpeed = sum / Double(speeds.count)
-			if(checkpointCoordinates.count != 0){
-				var sumCh = 0.0
-				for sp in fromCheckPointSpeeds {
-					sumCh += sp as Double
+
+			if(reachability.connection != .unavailable && sendUpdates && session?.appUserId != nil){
+				if(token != nil){
+					locationBuffer?.addLocation(location: location)
 				}
-				fromCheckpointAvgSpeed = sumCh / Double(fromCheckPointSpeeds.count)
+				
 			}
+			if(checkpointCoordinates.count > 0){
+				fromCheckpointDistanceStraight = lastSeenLocation!.distance(from: checkpointCoordinates.last!)
+			}
+			if(wayPointCoords != nil){
+				fromWaypointDistanceStraight = lastSeenLocation!.distance(from: CLLocation(latitude: wayPointCoords!.latitude, longitude: wayPointCoords!.longitude))
+			}
+			speeds.append(lastSeenLocation!.speed * 3.6)
+			if(!checkpointCoordinates.isEmpty){
+				fromCheckPointSpeeds.append(lastSeenLocation!.speed * 3.6)
+				
+			}
+			if(wayPointCoords != nil){
+				fromWPSpeeds.append(lastSeenLocation!.speed * 3.6)
+				fromWaypointDistanceStraight = lastSeenLocation!.distance(from: CLLocation(latitude: wayPointCoords!.latitude, longitude: wayPointCoords!.longitude))
+			}
+			overallTime.end = Date()
+			if(speeds.count > 3){
+				//				print(speeds)
+				var sum = 0.0
+				for speed in speeds {
+					sum += speed as Double
+				}
+				
+				session!.speed = 3600 / overallAvgSpeed
+				session!.distance = overallDistance
+				session!.duration = overallTime.duration.binade
+				session!.paceMax = 3600 / (speeds.max() != 0 ? speeds.max() as Double? ?? 1000 : 1000)
+				session!.paceMin = 3600 / (speeds.min() != 0 ? speeds.max() as Double? ?? 1000 : 1000)
+				
+				overallAvgSpeed = sum / Double(speeds.count)
+				if(checkpointCoordinates.count != 0){
+					var sumCh = 0.0
+					for sp in fromCheckPointSpeeds {
+						sumCh += sp as Double
+					}
+					fromCheckpointAvgSpeed = sumCh / Double(fromCheckPointSpeeds.count)
+				}
+				if(!fromWPSpeeds.isEmpty){
+					var suum = 0.0
+					for sp in fromWPSpeeds {
+						suum += sp as Double
+					}
+					sinceWaypointSetAvgSpeed = suum / Double(fromWPSpeeds.count)
+				}
+			}
+			
+			
 			
 			
 			
@@ -189,13 +256,13 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 					latitudeDelta: CLLocationDegrees(0.001),
 					longitudeDelta: CLLocationDegrees(0.001)
 				)
-		}
+			}
 		}else{
 			region = nil
 		}
 	} // func
 	
-
+	
 	func toggleLocationUpdates(){
 		updateRunning.toggle()
 		if(updateRunning){
@@ -203,15 +270,33 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 			resetParameters()
 			overallTime.start = Date()
 			session = repo.addSession(context: context!)
+			if(reachability.connection != .unavailable && sendUpdates){
+				if(token != nil){
+					session = APIMapper.saveSession(session: session!, token: token!, context: context!)
+					
+				}
+			}
+			locationBuffer?.session = session
+
 			
 			print("Location started updating")
 		}else{
 			locationManager.stopUpdatingLocation()
 			repo.edtiSession(session: session!,
-										 context: context!,
-										 speed: overallAvgSpeed,
-										 distance: overallDistance,
-										 duration: overallTime.duration.binade)
+							 context: context!,
+							 speed: 3600 / overallAvgSpeed,
+							 distance: overallDistance,
+							 duration: overallTime.duration.binade,
+							 paceMax: 3600 / (speeds.max() != 0 ? speeds.max() as Double? ?? 1000 : 1000),
+							 paceMin: 3600 / (speeds.min() != 0 ? speeds.max() as Double? ?? 1000 : 1000)
+			)
+			if(reachability.connection != .unavailable && sendUpdates && session?.appUserId != nil){
+				if(token != nil){
+					locationBuffer?.sendToBackend()
+					APIMapper.updateSession(session: session!, token: token!, context: context!)
+				}
+			}
+
 			print("Location stopped updating")
 		}
 	}
@@ -229,13 +314,12 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 		
 		// To next Waypoint
 		fromWaypointDistanceTraveled = 0
-		toWayPointDistance = 0
 		sinceWaypointSetAvgSpeed = 0
 		speeds = []
 		fromCheckPointSpeeds =  []
 		polyLineCoordinates = []
 	}
-    
+	
 	
 	func locationManager(
 		_ manager: CLLocationManager,
@@ -250,14 +334,14 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 		
 		region = MKCoordinateRegion(center: (lastSeenLocation?.coordinate ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)), span: MKCoordinateSpan(
 			latitudeDelta: CLLocationDegrees(0.001)
-				  , longitudeDelta: CLLocationDegrees(0.001)))
+			, longitudeDelta: CLLocationDegrees(0.001)))
 	}
 	
 	func setCheckPoint(){
 		if (lastSeenLocation?.coordinate) != nil{
 			if(updateRunning){
 				checkpointCoordinates.append(lastSeenLocation!)
-				repo.addLocation(
+				let location = repo.addLocation(
 					session: session!,
 					context: context!,
 					locationType: cpType!,
@@ -268,6 +352,12 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 					alt: lastSeenLocation!.altitude,
 					speed: lastSeenLocation!.speed,
 					verticalAccuracy: lastSeenLocation!.verticalAccuracy)
+				if(reachability.connection != .unavailable && sendUpdates && session?.appUserId != nil){
+					if(token != nil){
+						APIMapper.saveLocation(location: location, token: token!, context: context!)
+					}
+				}
+
 				fromCheckPointSpeeds = []
 				fromCheckpointAvgSpeed = 0
 				fromCheckpointDistanceStraight = 0
@@ -275,6 +365,13 @@ class AppLocationManager: NSObject, CLLocationManagerDelegate, ObservableObject 
 			}
 			
 		}
+		
+	}
+	
+	
+	func setWayPoint(){
+		wayPointCoords = lastSeenLocation?.coordinate
+		fromWaypointDistanceTraveled = 0
 		
 	}
 	
