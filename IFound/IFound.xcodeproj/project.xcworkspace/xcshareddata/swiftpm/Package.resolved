@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "aexml",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tadija/AEXML.git",
+      "state" : {
+        "revision" : "38f7d00b23ecd891e1ee656fa6aeebd6ba04ecc3",
+        "version" : "4.6.1"
+      }
+    },
+    {
+      "identity" : "swiftui-drawer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/maustinstar/swiftui-drawer.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "6d22f5c1362bfa71f2915c28aebba343b9243363"
+      }
+    }
+  ],
+  "version" : 2
+}

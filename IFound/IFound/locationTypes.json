@@ -1,0 +1,23 @@
+[
+  {
+	"id": "00000000-0000-0000-0000-000000000001",
+	"nameId": "8d12d6b3-15a5-4a8e-7db8-08d88e25b013",
+	"name": "LOC",
+	"descriptionId": "c46fea81-04d3-4205-7db7-08d88e25b013",
+	"description": "Regular periodic location update"
+  },
+  {
+	"id": "00000000-0000-0000-0000-000000000002",
+	"nameId": "748df048-76be-4260-7dba-08d88e25b013",
+	"name": "WP",
+	"descriptionId": "1f42dd75-b073-4515-7db9-08d88e25b013",
+	"description": "Waypoint - temporary location, used as navigation aid"
+  },
+  {
+	"id": "00000000-0000-0000-0000-000000000003",
+	"nameId": "c9a69f2d-2cd9-424a-7dbc-08d88e25b013",
+	"name": "CP",
+	"descriptionId": "3179993e-8184-4b29-7dbb-08d88e25b013",
+	"description": "Checkpoint - found on terrain the location marked on the paper map"
+  }
+]
