@@ -119,11 +119,6 @@ struct SessionDetailsView: View {
 				}
 			}
 		}
-		//		}.onAppear {
-		//			shouldReload = true
-		//	 }.onDisappear {
-		//		 shouldReload = false
-		//	 }
 	}
 }
 

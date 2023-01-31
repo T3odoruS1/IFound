@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C1FB53D297AC20E00364FA2 /* GpxExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FB53C297AC20E00364FA2 /* GpxExporter.swift */; };
 		7C3B6D27296C6ACB005DAE30 /* locationTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B6D26296C6ACB005DAE30 /* locationTypes.json */; };
 		7C47FE0429525A2A00AC1F91 /* TrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C47FE0329525A2A00AC1F91 /* TrackingView.swift */; };
 		7C47FE0829525F3000AC1F91 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C47FE0729525F3000AC1F91 /* MapView.swift */; };
@@ -57,6 +58,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C1FB53C297AC20E00364FA2 /* GpxExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxExporter.swift; sourceTree = "<group>"; };
 		7C3B6D26296C6ACB005DAE30 /* locationTypes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = locationTypes.json; path = IFound/locationTypes.json; sourceTree = SOURCE_ROOT; };
 		7C47FE0329525A2A00AC1F91 /* TrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingView.swift; sourceTree = "<group>"; };
 		7C47FE0729525F3000AC1F91 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				7CD2481C2978528000C3787F /* APIRepositoryMapper.swift */,
 				7CE3968F2975AB2E00719AE7 /* DataRepository.swift */,
 				7C858C3F297A9F7D0047FF30 /* CompassHeading.swift */,
+				7C1FB53C297AC20E00364FA2 /* GpxExporter.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				7CD2482329786EFD00C3787F /* GpsLocation+CoreDataProperties.swift in Sources */,
 				7CD248372978DD3400C3787F /* PreferenceData+CoreDataProperties.swift in Sources */,
 				7CCDF043295876B500DB0AC5 /* AuthenticationaManager.swift in Sources */,
+				7C1FB53D297AC20E00364FA2 /* GpxExporter.swift in Sources */,
 				7CCDF04E2958A7EE00DB0AC5 /* GpsSession+CoreDataClass.swift in Sources */,
 				7C78831129523FA5005481BC /* LoginView.swift in Sources */,
 				7CC0762C29747DCE00D3BF0C /* FieldView.swift in Sources */,

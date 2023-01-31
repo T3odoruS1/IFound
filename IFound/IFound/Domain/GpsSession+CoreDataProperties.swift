@@ -121,6 +121,19 @@ extension GpsSession {
 		}
 		return saved
 	}
+	
+	// in km or m
+	public var distanceForDisplay: String {
+		return "\(String(format: "%.2f", (distance > 1000 ?  distance / 1000 : distance ))) \(distance > 1000 ? "km" : "m" )"
+	}
+	
+	public var speedInMinPerKm : Double {
+		return speed / 60
+	}
+	
+	public var speedInKmPerHour : Double {
+		return (1 / (speed)) * 3600
+	}
 
 }
 

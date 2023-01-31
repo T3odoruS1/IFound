@@ -101,48 +101,56 @@ struct HistoryExpandableCardView: View{
 	@EnvironmentObject var authenticationManager: AuthenticationaManager
 	var APIMapper: APIRepositoryMapper = APIRepositoryMapper()
 	@State var editMode: Bool = false
+	let generator: GpxExporter = GpxExporter()
 	
 	var portrait: Bool = true
 	@State private var expanded: Bool = false
 	var session: GpsSession
 	
 	var body: some View {
+		
 		HStack{
-			
 			VStack{
-				HStack{
-					
-					Text("Your session at:" )
-						.font(.title)
-						.padding([.top, .leading])
-						.foregroundColor(.orange)
-					//					if(portrait || expanded){
-					Spacer()
-					Image(systemName: "arrow.up.and.down.text.horizontal")
-						.font(.largeTitle)
-						.foregroundColor(.orange)
-						.onTapGesture {
-							expanded.toggle()
-						}
-						.padding([.top, .leading])
-						.offset(y: 10)
-					
-					Image(systemName: getCouldIcon())
-						.padding([.top, .trailing])
-						.offset(y: 10)
-						.font(.title2)
-					
-					//					}
-				}
-				HStack{
-					Text("\(session.recordedAt?.formatted() ?? "NO DATA" )")
-						.font(.title3)
-						.foregroundColor(Color.primary)
-						.padding(.leading)
-					Spacer()
+				Section{
+					HStack{
+						
+						Text("Your session at:" )
+							.font(.title)
+							.padding([.top, .leading])
+							.foregroundColor(.orange)
+						//					if(portrait || expanded){
+						Spacer()
+						
+						
+						Image(systemName: "arrow.up.and.down.text.horizontal")
+							.font(.largeTitle)
+							.foregroundColor(.orange)
+							.onTapGesture {
+								expanded.toggle()
+							}
+							.padding([.top, .leading])
+							.offset(y: 10)
+						
+						Image(systemName: getCouldIcon())
+							.padding([.top, .trailing])
+							.offset(y: 10)
+							.font(.title2)
+						
+						
+						
+						//					}
+					}
+					HStack{
+						Text("\(session.recordedAt?.formatted() ?? "NO DATA" )")
+							.font(.title3)
+							.foregroundColor(Color.primary)
+							.padding(.leading)
+						Spacer()
+					}
 				}
 				
 				
+				//
 				if(expanded){
 					Section{
 						HStack{
@@ -154,14 +162,14 @@ struct HistoryExpandableCardView: View{
 							Spacer()
 						}
 						HStack{
-							Text("\(String(format: "%.2f", session.speed / 60)) min/km")
+							Text("\(String(format: "%.2f", session.speedInMinPerKm)) min/km")
 								.font(.title3)
 								.foregroundColor(Color.primary)
 								.padding(.leading)
 							Spacer()
 						}
 						HStack{
-							Text("\(session.speed != 0 ? String(format: "%.2f", (1 / session.speed) * 3600 )  + " km/h" : "0 km/h")")
+							Text("\(String(format: "%.2f", session.speedInKmPerHour)) km/h")
 								.font(.title3)
 								.foregroundColor(Color.primary)
 								.padding(.leading)
@@ -175,7 +183,7 @@ struct HistoryExpandableCardView: View{
 							Spacer()
 						}
 						HStack{
-							Text("\(String(format: "%.2f", (session.distance > 1000 ?  session.distance / 1000 : session.distance ))) \(session.distance > 1000 ? "km" : "m" )")
+							Text("\(session.distanceForDisplay)")
 								.font(.title3)
 								.foregroundColor(Color.primary)
 								.padding(.leading)
@@ -199,20 +207,40 @@ struct HistoryExpandableCardView: View{
 							.environmentObject(authenticationManager)
 							.environment(\.managedObjectContext, managedObjContext)
 						
+					}
+					Section{
 						if(!editMode){
-							Button("Edit", action: {
-								editMode.toggle()
+
+							Button(action: {
+								generator.createGpx(session: session)
+								
+							}, label: {
+								Image(systemName: "square.and.arrow.up")
+								
 							})
-							.padding()
+							.padding(.bottom)
 							.buttonStyle(.bordered)
 							.font(.title2)
 							.foregroundColor(.orange)
+							
+						
+							
+							Button("Edit", action: {
+								editMode.toggle()
+							})
+							.padding(.bottom)
+							.buttonStyle(.bordered)
+							.font(.title2)
+							.foregroundColor(.orange)
+
+							
+							
 						}
 						if(!session.fullySaved && authenticationManager.userLogedIn){
 							Button("Save to cloud", action: {
 								APIMapper.preformSyncing(session: session, token: authenticationManager.authResponse!.token!, context: managedObjContext)
-							}).padding()
-								.padding()
+							})
+								.padding(.bottom)
 								.buttonStyle(.bordered)
 								.font(.title2)
 								.foregroundColor(.orange)
@@ -221,50 +249,58 @@ struct HistoryExpandableCardView: View{
 								DataRepository().save(context: managedObjContext)
 								APIMapper.unassignSessionFromAccount(session: session, token: authenticationManager.authResponse!.token!, context: managedObjContext)
 							})
-							.padding()
+							.padding(.bottom)
 							.buttonStyle(.bordered)
 							.font(.title2)
 							.foregroundColor(.orange)
 						}
+						
+						//						.padding()
+						//						.buttonStyle(.bordered)
+						//						.font(.title2)
+						//						.foregroundColor(.orange)
+						
 					}
 				}
 				
-				
-				if(portrait){
-					MapView(
-						region: session.middleRegion,
-						direction: CLLocationDirection(0),
-						showMarker: false,
-						staticMap: true,
-						directionPreference: expanded ? .Free : .CenteredNorthUp,
-						polylineCoordinates: session.polyLineLocations,
-						speeds: session.locationSpeeds,
-						checkpointCoordinates: session.checkpointLocations,
-						scrollEnabled: expanded
-					)
-					.frame(minHeight: 300)
+				Section{
+					
+					
+					if(portrait){
+						MapView(
+							region: session.middleRegion,
+							direction: CLLocationDirection(0),
+							showMarker: false,
+							staticMap: true,
+							directionPreference: expanded ? .Free : .CenteredNorthUp,
+							polylineCoordinates: session.polyLineLocations,
+							speeds: session.locationSpeeds,
+							checkpointCoordinates: session.checkpointLocations,
+							scrollEnabled: expanded
+						)
+						.frame(minHeight: 300)
+					}
+					//					if(!portrait){
+					//						Spacer()
+					//					}
+					if(!portrait){
+						MapView(
+							region: session.middleRegion,
+							direction: CLLocationDirection(0),
+							showMarker: false,
+							staticMap: true,
+							directionPreference: expanded ? .Free : .CenteredNorthUp,
+							polylineCoordinates: session.polyLineLocations,
+							speeds: session.locationSpeeds,
+							checkpointCoordinates: session.checkpointLocations,
+							scrollEnabled: expanded
+						)
+						.frame(minHeight: !expanded ? 300 : 400)
+						
+					}
 				}
-				if(!portrait){
-					Spacer()
-				}
-			}
-			if(!portrait){
-				MapView(
-					region: session.middleRegion,
-					direction: CLLocationDirection(0),
-					showMarker: false,
-					staticMap: true,
-					directionPreference: expanded ? .Free : .CenteredNorthUp,
-					polylineCoordinates: session.polyLineLocations,
-					speeds: session.locationSpeeds,
-					checkpointCoordinates: session.checkpointLocations,
-					scrollEnabled: expanded
-				)
-				.frame(minHeight: !expanded ? 300 : 400)
-				
 			}
 		}
-		
 		.background(Color(uiColor: .systemBackground))
 		.cornerRadius(15)
 		.padding(.bottom)
